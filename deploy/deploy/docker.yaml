@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mysql:
+    image: docker.io/mysql:latest
+    container_name: mysql_test
+    ports:
+    - "3306:3306"
+    restart: always
+    volumes:
+     - ./volume-conf/example/sql:/docker-entrypoint-initdb.d/:ro
+     - ./volume-conf/example/conf:/root/
+     - /../../volume-data/example/:/data/
+    environment:
+    - MYSQL_ROOT_PASSWORD=123456
+    command:  ["/bin/sh", "-c", "cd /root/ && sh init_password.sh"]
+    networks:
+    - backend
+
+  # add other service
+
+networks:
+  backend:
+    external: true
