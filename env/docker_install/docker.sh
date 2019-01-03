@@ -27,11 +27,12 @@ elif [ "$1" == "install" ];then
 	# Update yum cache
 	yum makecache fast && yum -y install docker-ce
 	# install docker-compose
-	pip install docker-compose
+	pip install docker-compose --ignore-installed requests
 	echo "-----------Install docker successfully--------------"
 elif [ "$1" == "uninstall" ];then
 	yum remove docker*
-	pip uninstall docker-compose
+	# pip uninstall docker-compose
+	rm -rf /usr/local/bin/docker-compose
 	echo "-----------Uninstall docker successfully--------------"
 elif [ "$1" == "start" ];then
 	systemctl start docker
